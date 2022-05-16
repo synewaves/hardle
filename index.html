@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hardle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://unpkg.com/simpledotcss/simple.min.css"></link>
+  <meta name="description" content="Let's all start with the same starting word!" />
+  <style>
+    body {
+      font-family: 'Red Hat Display', sans-serif;
+    }
+
+    #wordOfTheDay {
+      margin-bottom: 2em;
+    }
+
+    .letter {
+      font-size: 250%;
+      display: inline-block;
+      border: 2px solid #3a3a3a;
+      padding: 2px 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hardle</h1>
+    <p>Let's all start with the same starting word!</p>
+  </header>
+  <main>
+    <div style="text-align:center;">
+      <p>Today's word is...</p>
+      <div id="wordOfTheDay">
+        <div class="letter">-</div>
+        <div class="letter">-</div>
+        <div class="letter">-</div>
+        <div class="letter">-</div>
+        <div class="letter">-</div>
+      </div>
+      <a href="https://www.nytimes.com/games/wordle/index.html"><button>Now go play!</button></a>
+    </div>
+  </main>
+  <footer>
+    <p>Made by <a href="https://matthewvince.com/">Matthew Vince</a>; Made playable by Wordle</p>
+  </footer>
+
+  <script src="hardle.js"></script>
+</body>
+</html>
