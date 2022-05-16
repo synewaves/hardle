@@ -39,8 +39,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var shuffledList = shuffle(wordList, 8675309);
   var word = shuffledList[seed];
 
-  var $letters = document.getElementsByClassName("letter")
+  var $letters = document.getElementsByClassName("letter");
+  var $date = document.getElementById("date");
+  var $game = document.getElementById("game");
+
   for (var i = 0; i < $letters.length; ++i) {
     $letters[i].innerHTML = word[i];
   }
+
+  $date.innerHTML = today.toLocaleDateString('en-us', {
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric'
+  });
+
+  $game.innerHTML = seed;
 });
