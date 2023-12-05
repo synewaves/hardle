@@ -55,6 +55,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     day: 'numeric'
   });
 
-  $definition.href = `https://www.merriam-webster.com/dictionary/${word}`;
+  $definition.href = `https://www.google.com/search?q=define%3a${word}`;
   $game.innerHTML = seed;
 });
