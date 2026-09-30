@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var $game = document.getElementById("game");
   var $definition = document.getElementById("definition");
   var $datePicker = document.getElementById("datePicker");
-  var $datePickerTrigger = document.getElementById("datePickerTrigger");
   var $previousDate = document.getElementById("previousDate");
   var $nextDate = document.getElementById("nextDate");
 
@@ -85,13 +84,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
     renderDate(selectedDate);
   });
 
-  $datePickerTrigger.addEventListener('click', function(event) {
-    event.preventDefault();
-    if (typeof $datePicker.showPicker === 'function') {
+  $datePicker.addEventListener('click', function() {
+    if (typeof $datePicker.showPicker !== 'function') return;
+
+    try {
       $datePicker.showPicker();
-    } else {
-      $datePicker.focus();
-      $datePicker.click();
+    } catch (error) {
+      // The browser may have opened the native picker as part of the input click.
     }
   });
 
