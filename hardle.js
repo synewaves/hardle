@@ -35,26 +35,79 @@ function getDayIndex(day, seed) {
 document.addEventListener("DOMContentLoaded", function(event) { 
   var today = new Date();
   var start = new Date(2021, 5, 19, 0, 0, 0, 0);
-  var seed = getDayIndex(today, start);
-  var shuffledList = shuffle(wordList, 8675309);
-  var word = shuffledList[seed];
+  var shuffledList = shuffle(wordList.slice(), 8675309);
 
   var $letters = document.getElementsByClassName("letter");
   var $date = document.getElementById("date");
   var $game = document.getElementById("game");
   var $definition = document.getElementById("definition");
+  var $datePicker = document.getElementById("datePicker");
+  var $datePickerTrigger = document.getElementById("datePickerTrigger");
+  var $previousDate = document.getElementById("previousDate");
+  var $nextDate = document.getElementById("nextDate");
 
-  for (var i = 0; i < $letters.length; ++i) {
-    $letters[i].innerHTML = word[i];
+  function renderDate(date) {
+    var seed = getDayIndex(date, start);
+    var word = shuffledList[seed];
+
+    for (var i = 0; i < $letters.length; ++i) {
+      $letters[i].textContent = word[i];
+    }
+
+    $date.textContent = date.toLocaleDateString('en-us', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+
+    $definition.href = `https://www.google.com/search?q=define%3a${word}`;
+    $game.textContent = seed;
+    $datePicker.value = formatDateInput(date);
+    $previousDate.disabled = seed === 0;
+    var isToday = formatDateInput(date) === formatDateInput(today);
+    $nextDate.hidden = isToday;
+    $nextDate.disabled = isToday;
   }
 
-  $date.innerHTML = today.toLocaleDateString('en-us', {
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'short', 
-    day: 'numeric'
+  function formatDateInput(date) {
+    var month = String(date.getMonth() + 1).padStart(2, '0');
+    var day = String(date.getDate()).padStart(2, '0');
+    return `${date.getFullYear()}-${month}-${day}`;
+  }
+
+  $datePicker.min = formatDateInput(start);
+  $datePicker.max = formatDateInput(today);
+  $datePicker.value = formatDateInput(today);
+  $datePicker.addEventListener('change', function() {
+    var parts = $datePicker.value.split('-');
+    var selectedDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+    renderDate(selectedDate);
   });
 
-  $definition.href = `https://www.google.com/search?q=define%3a${word}`;
-  $game.innerHTML = seed;
+  $datePickerTrigger.addEventListener('click', function(event) {
+    event.preventDefault();
+    if (typeof $datePicker.showPicker === 'function') {
+      $datePicker.showPicker();
+    } else {
+      $datePicker.focus();
+      $datePicker.click();
+    }
+  });
+
+  $previousDate.addEventListener('click', function() {
+    if ($previousDate.disabled) return;
+    var selectedDate = new Date($datePicker.value + 'T00:00:00');
+    selectedDate.setDate(selectedDate.getDate() - 1);
+    renderDate(selectedDate);
+  });
+
+  $nextDate.addEventListener('click', function() {
+    if ($nextDate.disabled) return;
+    var selectedDate = new Date($datePicker.value + 'T00:00:00');
+    selectedDate.setDate(selectedDate.getDate() + 1);
+    renderDate(selectedDate);
+  });
+
+  renderDate(today);
 });

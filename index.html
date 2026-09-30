@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap" rel="stylesheet"> 
-  <link rel="stylesheet" href="https://unpkg.com/simpledotcss/simple.min.css"></link>
+  <link rel="stylesheet" href="https://unpkg.com/simpledotcss/simple.min.css">
   <meta name="description" content="Let's all start with the same starting word!" />
   <style>
     body {
@@ -29,6 +29,62 @@
       min-width: 55px;
       min-height: 55px;
     }
+
+    .date-picker-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+      opacity: 0;
+    }
+
+    #previousDate:disabled,
+    #nextDate:disabled {
+      color: #777;
+      pointer-events: none;
+      text-decoration: none;
+    }
+
+    #previousDate,
+    #nextDate {
+      color: #777;
+      font-size: 1.5em;
+      font-weight: 800;
+      text-decoration: none;
+      background: none;
+      border: 0;
+      padding: 0 0.15em;
+      cursor: pointer;
+    }
+
+    #datePickerTrigger {
+      color: inherit;
+      text-decoration: none;
+      display: inline-block;
+      padding: 0.08em 0.3em;
+      outline: 1px solid #888;
+      outline-offset: 1px;
+      border-radius: 4px;
+    }
+
+    #datePickerTrigger::after {
+      content: " \25BE";
+      font-size: 1em;
+      vertical-align: 0.1em;
+    }
+
+    .play-link {
+      display: inline-block;
+      padding: 0.5em 1em;
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -38,7 +94,12 @@
   </header>
   <main>
     <div style="text-align:center;">
-      <h4><span id="date"></span> (#<span id="game"></span>)</h3>
+      <h4>
+        <button id="previousDate" type="button" aria-label="Previous date">&larr;</button>
+        <a id="datePickerTrigger" href="#" aria-label="Choose a date"><span id="date"></span> (#<span id="game"></span>)</a>
+        <button id="nextDate" type="button" aria-label="Next date">&rarr;</button>
+      </h4>
+      <input id="datePicker" class="date-picker-hidden" type="date" aria-label="Choose a date">
       <div id="wordOfTheDay">
         <div class="letter">-</div>
         <div class="letter">-</div>
@@ -46,7 +107,7 @@
         <div class="letter">-</div>
         <div class="letter">-</div>
       </div>
-      <p><a href="https://www.nytimes.com/games/wordle/index.html"><button>Now go play!</button></a></p>
+      <p><a class="play-link" href="https://www.nytimes.com/games/wordle/index.html">Now go play!</a></p>
       <p>What does this word mean?<br><a href="#" id="definition">Get the definition</a></p>
     </div>
   </main>
